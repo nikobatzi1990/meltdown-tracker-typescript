@@ -1,5 +1,6 @@
-const knex = require('knex');
-require('dotenv').config();
+import knex from 'knex';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const getKnexConfig = () => {
   if (process.env.NODE_ENV) {
@@ -8,4 +9,4 @@ const getKnexConfig = () => {
   }
 }
 
-module.exports = knex(getKnexConfig());
+export default knex(getKnexConfig());
