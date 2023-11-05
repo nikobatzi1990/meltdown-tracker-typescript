@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import path from 'path';
-import knex from '../database/knex'
+import knex from '../database/knex';
 
 function setUpServer() {
   const app: Express = express();
@@ -201,4 +201,4 @@ function setUpServer() {
   
   return app;
 }
-module.exports = setUpServer;
+export default setUpServer;
