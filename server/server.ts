@@ -1,12 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import path from 'path';
 import knex from '../database/knex';
+const tagController = require('./controllers/tagController');
 
 function setUpServer() {
   const app: Express = express();
 
   app.use(express.static(path.resolve(__dirname, '../client/build')));
   app.use(express.json());
+  app.use('/api/:uid/tags', tagController);
 
   // signup endpoint
   app.post('/api/signup', async (req: Request, res: Response) => {
@@ -16,56 +18,6 @@ function setUpServer() {
       res.status(200).send("New User Created");
     } catch (error) {
       res.status(400).send(error);
-    }
-  });
-  
-  // endpoint for getting user created tags
-  app.get('/api/:uid/tags', async (req: Request, res: Response) => {
-    const tagList: string[] = [];
-    await knex.select('tag_name').from('tags')
-      .where('users.UID', req.params.uid)
-      .join('users', 'users.id', '=', 'tags.user_id')
-    .then(result => {
-      result.map((e) => {
-        tagList.push(e.tag_name);
-      })
-      res.status(200).send(tagList)})
-    .catch(error => res.status(400).send(error))
-  });
-
-  // endpoint for getting the number of times a tag has been used
-  app.get('/api/tags/:tagName/timesUsed', async (req: Request, res: Response) => {
-    let timesUsed: number;
-    await knex.select('times_used').from('tags')
-      .where('tag_name', req.params.tagName)
-      .join('users', 'users.id', '=', 'tags.user_id')
-
-    .then(result => {
-      result.map((e) => {
-        timesUsed = e.times_used.toString();
-      });
-      res.status(200).send(timesUsed)
-    })
-    .catch(error => res.status(400).send(error))
-  });
-
-  // endpoint for posting a new tag
-  app.post('/api/tags/newTag', async (req: Request, res: Response) => {
-    const { tagName, uid } = req.body;
-    try {
-      const userId = await knex.select('id')
-        .from('users')
-        .where('users.UID', uid);
-
-      const newTag = await knex('tags')
-        .insert({ 
-          'user_id': userId[0].id, 
-          'tag_name': tagName, 
-          'times_used': 0 
-        });
-      res.status(200).send(newTag);
-    } catch (error) {
-        res.status(400).send(error);
     }
   });
 
