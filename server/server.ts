@@ -2,13 +2,15 @@ import express, { Express, Request, Response } from "express";
 import path from 'path';
 import knex from '../database/knex';
 const tagController = require('./controllers/tagController');
+const entryController = require('./controllers/entryController');
 
 function setUpServer() {
   const app: Express = express();
 
   app.use(express.static(path.resolve(__dirname, '../client/build')));
   app.use(express.json());
-  app.use('/api/:uid/tags', tagController);
+  app.use('/api/tags', tagController);
+  app.use('/api/entries', entryController);
 
   // signup endpoint
   app.post('/api/signup', async (req: Request, res: Response) => {
@@ -16,66 +18,6 @@ function setUpServer() {
     try {
       await knex('users').insert({ 'username': username, 'email': email, 'UID': uid, 'created_at': new Date() });
       res.status(200).send("New User Created");
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  });
-
-  // endpoint for posting a new entry submission
-  app.post('/api/entries/submission', async (req: Request, res: Response) => {
-    const { uid, tagName, timesUsed, title, body, timeOfDay, flagged, intensity } = req.body;
-      const userId = await knex.select('id')
-        .from('users')
-        .where('UID', '=', uid);
-      
-      try {
-      const tagQuery = await knex('tags')
-        .returning('id')
-        .update({
-          'times_used': timesUsed
-        })
-        .where('tag_name', '=', tagName);
-
-        console.log('🤗', tagQuery);
-
-      const postQuery = await knex('posts')
-        .returning('id')
-        .insert({ 
-          'title': title, 
-          'body': body,
-          'user_id': userId[0].id,
-          'time_of_day': timeOfDay,
-          'created_at': new Date(),
-          'flagged': flagged,
-          'intensity': intensity
-        });
-
-      // await knex('tag_to_post')
-      //   .insert({
-      //     'tag_id': tagQuery[0].id,
-      //     'post_id': postQuery[0].id
-      //   });
-
-      res.status(200).send(postQuery)
-      
-    } catch (error) {
-        res.status(400).send(error);
-    }
-  });
-
-  // endpoint for all of one user's entries
-  app.get('/api/:uid/entries', async (req: Request, res: Response) => {
-    
-    try {
-      await knex.select('posts.id', 'title', 'body', 'flagged', 'intensity')
-        .from('posts')
-        .where('users.UID', req.params.uid)
-        .join('users', 'users.id', '=', 'posts.user_id')
-        .orderBy('id', 'desc')
-      .then(result => {
-        res.status(200).send(result);
-      });
-      
     } catch (error) {
       res.status(400).send(error);
     }

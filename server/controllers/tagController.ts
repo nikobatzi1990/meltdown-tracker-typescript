@@ -2,9 +2,8 @@ import express, { Request, Response } from "express";
 import knex from '../../database/knex';
 const router = express.Router();
 
-router.get(
 // endpoint for getting a user's created tags
-'/', async (req: Request, res: Response) => {
+router.get('/:uid', async (req: Request, res: Response) => {
   const tagList: string[] = [];
   await knex.select('tag_name').from('tags')
     .where('users.UID', req.params.uid)
@@ -12,20 +11,18 @@ router.get(
   .then(result => {
     result.map((e) => {
       tagList.push(e.tag_name);
-    })
+    });
     res.status(200).send(tagList)})
   .catch(error => res.status(400).send(error))
 });
 
-// /api/:uid/tags
-
 // endpoint for posting a new tag
-router.post('/newTag', async (req: Request, res: Response) => {
-  const { tagName, uid } = req.body;
+router.post(':uid/newTag', async (req: Request, res: Response) => {
+  const { tagName } = req.body;
   try {
     const userId = await knex.select('id')
       .from('users')
-      .where('users.UID', uid);
+      .where('users.UID', req.params.uid);
 
     const newTag = await knex('tags')
       .insert({ 
@@ -39,19 +36,20 @@ router.post('/newTag', async (req: Request, res: Response) => {
   }
 });
 
-router.post(
-  // endpoint for getting the number of times a tag has been used
-  '/:tagName/timesUsed', async (req: Request, res: Response) => {
-    let timesUsed: number;
-    await knex.select('times_used').from('tags')
-      .where('tag_name', req.params.tagName)
-      .join('users', 'users.id', '=', 'tags.user_id')
+// endpoint for getting the number of times a tag has been used
+router.post('/:tagName/timesUsed', async (req: Request, res: Response) => {
+  let timesUsed: number;
+  await knex.select('times_used').from('tags')
+    .where('tag_name', req.params.tagName)
+    .join('users', 'users.id', '=', 'tags.user_id')
 
-    .then(result => {
-      result.map((e) => {
-        timesUsed = e.times_used.toString();
-      });
-      res.status(200).send(timesUsed)
-    })
-    .catch(error => res.status(400).send(error))
-  });
+  .then(result => {
+    result.map((e) => {
+      timesUsed = e.times_used.toString();
+    });
+    res.status(200).send(timesUsed)
+  })
+  .catch(error => res.status(400).send(error))
+});
+
+module.exports = router;
