@@ -1,12 +1,12 @@
 interface InputProps {
-  className: string,
-  id: string,
-  name: string,
-  onChange: React.ChangeEventHandler,
-  placeholder: string,
-  text: string,
+  className?: string,
+  id?: string,
+  name?: string,
+  onChange?: React.ChangeEventHandler,
+  placeholder?: string,
+  text?: string,
   type: string,
-  value: string
+  value?: string
 }
 
 export default function Input({ 
