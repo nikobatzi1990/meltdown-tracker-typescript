@@ -17,6 +17,13 @@ export default function Signup() {
           type="text"
         />
         <Input
+          id="email"
+          name="email"
+          // placeholder="Email"
+          text="Email: "
+          type="email"
+        />
+        <Input
           id="password"
           name="password"
           // placeholder="Password"
