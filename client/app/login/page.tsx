@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Input from "../components/Input";
+import Link from "next/link";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   return (
     <>
+    <h1>LOGIN</h1>
       <form>
         <Input
           id="username"
@@ -32,6 +34,8 @@ export default function Login() {
         />
         <Input type="submit"/>
       </form>
+      <p>Don&apos;t have an account?</p>
+      <Link href='/signup'>Sign Up!</Link>
     </>
   );
 }
