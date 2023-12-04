@@ -15,8 +15,13 @@ export default function Home() {
 
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <Header />
-        <main >
-          <Link href='/login'>Login</Link>
+        <main className="flex flex-col items-center">
+          <Link href='/login' passHref>
+            <button>Login</button>
+          </Link>
+          <Link href='/signup' passHref>
+            <button>Signup</button>
+          </Link>
         </main>
         <Footer />
       </div>
