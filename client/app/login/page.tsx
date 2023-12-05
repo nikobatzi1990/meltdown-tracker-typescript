@@ -2,28 +2,44 @@
 import { useState } from "react";
 import Input from "../components/Input";
 import Link from "next/link";
+import { UserAuth } from "../context/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const auth = UserAuth();
+  const { login } = auth || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleLogin = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    try {
+      await login?.(email, password);
+    } catch (err) {
+      console.log("ERROR: ", err);
+    }
+  }
+
+  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  }
+  
+  const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  }
+
   return (
     <>
     <h1>LOGIN</h1>
-      <form>
-        <Input
-          id="username"
-          name="username"
-          // placeholder="Username"
-          text="Username: "
-          type="text"
-        />
+      <form onSubmit={handleLogin}>
         <Input
           id="email"
           name="email"
           // placeholder="Email"
           text="Email: "
           type="email"
+          onChange={handleEmailInput}
         />
         <Input
           id="password"
@@ -31,6 +47,7 @@ export default function Login() {
           // placeholder="Password"
           text="Password: "
           type="password"
+          onChange={handlePasswordInput}
         />
         <Input type="submit"/>
       </form>
