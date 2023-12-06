@@ -49,7 +49,7 @@ export default function Login() {
           type="password"
           onChange={handlePasswordInput}
         />
-        <Input type="submit"/>
+        <button type="submit">Submit</button>
       </form>
       <p>Don&apos;t have an account?</p>
       <Link href='/signup'>Sign Up!</Link>

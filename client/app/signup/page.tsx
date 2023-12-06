@@ -1,12 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "../components/Input";
 import Link from "next/link";
 import { UserAuth } from "../context/AuthContext";
 
 export default function Signup() {
   const auth = UserAuth();
-  const { signup } = auth || {};
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +13,10 @@ export default function Signup() {
   const handleSignup = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      await signup?.(username, email, password);
+      if (auth) {
+        console.log("WORKS")
+        await auth.signup(username, email, password);
+      }
     } catch (err) {
       console.log("ERROR: ", err);
     }
@@ -34,6 +36,10 @@ export default function Signup() {
     e.preventDefault();
     setPassword(e.target.value);
   }
+
+  // useEffect(() => {
+  //   console.log(auth)
+  // })
 
   return (
     <>
@@ -63,8 +69,7 @@ export default function Signup() {
           type="password"
           onChange={handlePasswordInput}
         />
-        <Input 
-          type="submit"/>
+        <button type="submit">Sign Up</button>
       </form>
       <p>Already have an account?</p>
       <Link href='/login'>Login</Link>
