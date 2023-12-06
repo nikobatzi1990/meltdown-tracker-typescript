@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import auth from '../firebase';
@@ -48,6 +49,7 @@ export const AuthContextProvider = ({children}: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       const loggedIn = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Login in Successful", loggedIn)
       return loggedIn;
     } catch (err) {
       console.error("Login failed:", err);
