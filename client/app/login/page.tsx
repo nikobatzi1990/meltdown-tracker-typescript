@@ -6,14 +6,15 @@ import { UserAuth } from "../context/AuthContext";
 
 export default function Login() {
   const auth = UserAuth();
-  const { login } = auth || {};
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      await login?.(email, password);
+      if (auth) {
+        await auth.login(email, password);
+      }
     } catch (err) {
       console.log("ERROR: ", err);
     }
@@ -49,7 +50,7 @@ export default function Login() {
           type="password"
           onChange={handlePasswordInput}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Log In</button>
       </form>
       <p>Don&apos;t have an account?</p>
       <Link href='/signup'>Sign Up!</Link>
