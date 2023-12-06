@@ -14,7 +14,6 @@ export default function Signup() {
     e.preventDefault();
     try {
       if (auth) {
-        console.log("WORKS")
         await auth.signup(username, email, password);
       }
     } catch (err) {
