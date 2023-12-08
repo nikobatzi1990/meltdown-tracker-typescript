@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Input from "../components/Input";
 import Link from "next/link";
 import { UserAuth } from "../context/AuthContext";
@@ -35,10 +35,6 @@ export default function Signup() {
     e.preventDefault();
     setPassword(e.target.value);
   }
-
-  // useEffect(() => {
-  //   console.log(auth)
-  // })
 
   return (
     <>
