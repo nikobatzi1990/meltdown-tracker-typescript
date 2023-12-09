@@ -3,6 +3,7 @@ import { useState } from "react";
 import Input from "../components/Input";
 import Link from "next/link";
 import { UserAuth } from "../context/AuthContext";
+import EntryList from "../components/EntryList";
 
 export default function Login() {
   const auth = UserAuth();
@@ -54,6 +55,8 @@ export default function Login() {
       </form>
       <p>Don&apos;t have an account?</p>
       <Link href='/signup'>Sign Up!</Link>
+
+      <EntryList />      
     </>
   );
 }
