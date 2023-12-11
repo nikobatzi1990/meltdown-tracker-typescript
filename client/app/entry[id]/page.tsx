@@ -16,6 +16,7 @@ interface Entry {
 }
 
 const auth = UserAuth();
+const uid = auth?.user?.uid
 
 export async function getAllEntryIds() {
   const entries = await axios.get(`/api/entries/${auth?.user?.uid}`);
@@ -29,13 +30,31 @@ export async function getAllEntryIds() {
 }
 
 const handleEntryData = async () => {
-  const uid = auth?.user?.uid
   try {
     const fetchedEntry = await axios.get(`/api/entries/${uid}/entry/###`);
     return fetchedEntry.data;
   } catch (err) {
     console.log("ERROR: ", err);
   }
+}
+
+export async function getStaticProps(context: {params: {id: number}}) {
+  const entryId = context.params?.id;
+  const entryData = await handleEntryData();
+
+  return {
+    props: {
+      entryData,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const paths = getAllEntryIds();
+  return {
+    paths,
+    fallback: false,
+  };
 }
 
 export default function SingleEntry() {
