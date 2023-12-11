@@ -39,7 +39,7 @@ export default function EntryList() {
           <div 
             key={entry.id} 
           >
-            <Link href="#">{entry.title}</Link>
+            <Link href={`entry/${entry.id}`}>{entry.title}</Link>
               { entry.flagged &&
                 <HiLightBulb title="This was a significant event!" alt="Significant Event" />
               }
