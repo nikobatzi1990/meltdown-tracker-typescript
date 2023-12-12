@@ -29,9 +29,9 @@ export async function getAllEntryIds() {
   });
 }
 
-const handleEntryData = async () => {
+const fetchEntry = async (id: number) => {
   try {
-    const fetchedEntry = await axios.get(`/api/entries/${uid}/entry/###`);
+    const fetchedEntry = await axios.get(`/api/entries/${uid}/entry/${id}`);
     return fetchedEntry.data;
   } catch (err) {
     console.log("ERROR: ", err);
@@ -40,7 +40,7 @@ const handleEntryData = async () => {
 
 export async function getStaticProps(context: {params: {id: number}}) {
   const entryId = context.params?.id;
-  const entryData = await handleEntryData();
+  const entryData = await fetchEntry(entryId);
 
   return {
     props: {
@@ -60,6 +60,31 @@ export async function getStaticPaths() {
 export default function SingleEntry() {
   const [entry, setEntry] = useState<Entry>();
   const [date, setDate] = useState<string>('');
+
+  useEffect(() => {
+    const handleEntryData = async () => {
+      try {
+        const fetchedEntry = await axios.get(`/api/entries/entry/${entry?.id}`);
+        setEntry(fetchedEntry.data);
+        setDate(new Date(fetchedEntry.data.created_at)
+          .toLocaleDateString(
+            'en-gb',
+            {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: "numeric", 
+              minute: "numeric", 
+              hour12: true,
+              timeZoneName: "long"
+            })
+          );
+      } catch (err) {
+        console.log('ERROR: ', err);
+      }
+    }
+    handleEntryData();
+  }, []);
 
   return (
     <>
