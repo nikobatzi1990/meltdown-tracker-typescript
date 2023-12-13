@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { UserAuth } from "../context/AuthContext";
 import { HiLightBulb } from "react-icons/hi";
-import { getAll } from "firebase/remote-config";
 
 interface Entry {
   id: number,
