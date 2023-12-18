@@ -91,7 +91,7 @@ router.post('/:uid/submission', async (req: Request, res: Response) => {
 });
 
 // endpoint for editing an entry by id
-router.patch('/:uid/:entryId/edit', async (req: Request, res: Response) => {
+router.patch('/:uid/entry/:entryId/edit', async (req: Request, res: Response) => {
   const { title, body, timeOfDay, flagged, intensity } = req.body;
   try {
     await knex('posts')
@@ -112,7 +112,7 @@ router.patch('/:uid/:entryId/edit', async (req: Request, res: Response) => {
 });
 
 // endpoint for deleting an entry
-router.delete('/:uid/:entryId/deletion', async (req: Request, res: Response) => {
+router.delete('/:uid/entry/:entryId/deletion', async (req: Request, res: Response) => {
   const id = req.params.entryId;
   try {
     await knex('posts')
