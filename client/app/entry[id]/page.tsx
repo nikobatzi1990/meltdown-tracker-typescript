@@ -95,7 +95,9 @@ export default function SingleEntry() {
       { entry?.flagged &&
         <HiLightBulb title="This was a significant event!"/>
       }
-      <h3 className="entry-title">{ entry?.title }</h3>
+      <h3>{ entry?.title }</h3>
+      <p>Tags: {entry?.tags}</p>
+      <p>{entry?.body}</p>
       
     </>
   );
