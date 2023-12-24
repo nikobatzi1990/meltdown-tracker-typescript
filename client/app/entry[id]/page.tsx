@@ -87,6 +87,17 @@ export default function SingleEntry() {
 
   return (
     <>
+      <div>
+        <p>Time of Day: {entry?.timeOfDay}</p>
+        <p>Meltdown Intensity: {entry?.intensity}</p>
+        <p>{date}</p>
+      </div>
+      { entry?.flagged &&
+        <HiLightBulb title="This was a significant event!"/>
+      }
+      <h3>{ entry?.title }</h3>
+      <p>Tags: {entry?.tags}</p>
+      <p>{entry?.body}</p>
       
     </>
   );
