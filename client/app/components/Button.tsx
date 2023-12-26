@@ -1,5 +1,5 @@
 interface ButtonProps {
-  onClick: React.MouseEventHandler,
+  onClick?: React.MouseEventHandler,
   text: string,
   title: string,
   type: "button" | "submit" | "reset"
