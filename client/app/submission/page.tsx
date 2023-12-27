@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import axios from 'axios';
 import { UserAuth } from "../context/AuthContext";
 import { HiLightBulb } from "react-icons/hi";
@@ -29,8 +29,9 @@ export default function Submission() {
     intensity: intensity 
   };
 
-  const handleSubmission = async() => {
-
+  const handleSubmission = async(e: React.FormEvent) => {
+    e.preventDefault();
+    await axios.post(`/api/entries/${auth?.user?.uid}/submission`, submissionData);
   }
 
   return (
