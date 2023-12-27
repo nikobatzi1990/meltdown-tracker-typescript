@@ -3,7 +3,6 @@ interface ButtonProps {
   text: string,
   title: string,
   type: "button" | "submit" | "reset"
-
 }
 
 export default function Button({
