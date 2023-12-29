@@ -1,5 +1,5 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios from 'axios';
 import { UserAuth } from "../context/AuthContext";
 import { HiLightBulb } from "react-icons/hi";
@@ -14,22 +14,53 @@ export default function Submission() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState("");
-  const [time, setTime] = useState("");
+  const [timeOfDay, setTimeOfDay] = useState("");
   const [intensity, setIntensity] = useState("not specified");
   const [isFlagged, setIsFlagged] = useState(false);
+  const [timesUsed, setTimesUsed] = useState(0);
 
   const submissionData = { 
     uid: auth?.user?.uid, 
     tagName: tag, 
-    timesUsed: 0, 
+    timesUsed: timesUsed, 
     title: title, 
     body: body, 
-    timeOfDay: time, 
+    timeOfDay: timeOfDay, 
     flagged: isFlagged, 
     intensity: intensity 
   };
 
-  const handleSubmission = async(e: React.FormEvent) => {
+  const handleTitleInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const value = e.target.value;
+    setTitle(value);
+  }
+
+  const handleTextBody = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const value = e.target.value;
+    setBody(value);
+  }
+
+  const handleTagInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const value = e.target.value;
+    setTag(value);
+  }
+
+  const handleTimeOfDay = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const value = e.target.id;
+    setTimeOfDay(value);
+  }
+
+  const handleIntensity = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const value = e.target.id;
+    setIntensity(value);
+  }
+
+  const handleSubmission = async(e: FormEvent) => {
     e.preventDefault();
     await axios.post(`/api/entries/${auth?.user?.uid}/submission`, submissionData);
   }
