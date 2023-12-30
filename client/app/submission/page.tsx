@@ -69,6 +69,7 @@ export default function Submission() {
     <>
       <h1>Entry Submission</h1>
       <form onSubmit={handleSubmission}>
+        <TimeOfDay />
         <Intensity /> 
         <Button 
           text="Submit"

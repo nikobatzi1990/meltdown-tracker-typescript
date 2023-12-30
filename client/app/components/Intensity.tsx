@@ -11,7 +11,7 @@ export default function Intensity() {
         type='radio'
         value='1' 
       />
-        <Input 
+      <Input 
         id='intensity_two'
         name='intensity'
         text='2'
