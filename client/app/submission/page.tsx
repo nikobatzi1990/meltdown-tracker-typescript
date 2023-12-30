@@ -60,8 +60,14 @@ export default function Submission() {
     setIntensity(value);
   }
 
+  const handleTagTimesUsed = async() => {
+    const previousTimesUsed = await axios.get(`/api/tags/${submissionData.tagName}/timesUsed`);
+    setTimesUsed(Number(previousTimesUsed.data) + 1);
+  }
+
   const handleSubmission = async(e: FormEvent) => {
     e.preventDefault();
+    await handleTagTimesUsed();
     await axios.post(`/api/entries/${auth?.user?.uid}/submission`, submissionData);
   }
 
