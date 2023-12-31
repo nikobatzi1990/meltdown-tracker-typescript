@@ -13,10 +13,12 @@ export default function Button({
 }: ButtonProps) {
 
   return (
-    <button
-      title = { title }
-      type = { type }
-      onClick = { onClick } > { text }
-    </button>
+    <div>
+      <button
+        title = { title }
+        type = { type }
+        onClick = { onClick } > { text }
+      </button>
+    </div>
   )
 };

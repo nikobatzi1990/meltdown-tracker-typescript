@@ -1,6 +1,13 @@
+import { useState, ChangeEvent } from "react";
 import Input from "./Input";
 
-export default function TimeOfDay() {
+interface TimeOfDayProps {
+  onChange: React.ChangeEventHandler,
+  timeOfDay: string
+}
+
+export default function TimeOfDay({ onChange, timeOfDay }: TimeOfDayProps) {
+
   return (
     <>
       <p>Time of Day</p>
@@ -10,7 +17,9 @@ export default function TimeOfDay() {
         name='time-of-day'
         text='Morning'
         type='radio'
-        value='morning' 
+        value='morning'
+        onChange={onChange}
+        checked={timeOfDay === 'morning'}
       />
       <Input 
         id='afternoon'
@@ -18,6 +27,8 @@ export default function TimeOfDay() {
         text='Afternoon'
         type='radio'
         value='afternoon' 
+        onChange={onChange}
+        checked={timeOfDay === 'afternoon'}
       />
       <Input 
         id='evening'
@@ -25,6 +36,8 @@ export default function TimeOfDay() {
         text='Evening'
         type='radio'
         value='evening' 
+        onChange={onChange}
+        checked={timeOfDay === 'evening'}
       />
       <Input 
         id='night'
@@ -32,6 +45,8 @@ export default function TimeOfDay() {
         text='Night'
         type='radio'
         value='night' 
+        onChange={onChange}
+        checked={timeOfDay === 'night'}
       />
     </>
   );

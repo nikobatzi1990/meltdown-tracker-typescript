@@ -14,7 +14,7 @@ export default function Submission() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tag, setTag] = useState("");
-  const [timeOfDay, setTimeOfDay] = useState("");
+  const [timeOfDay, setTimeOfDay] = useState("morning");
   const [intensity, setIntensity] = useState("not specified");
   const [isFlagged, setIsFlagged] = useState(false);
   const [timesUsed, setTimesUsed] = useState(0);
@@ -65,6 +65,10 @@ export default function Submission() {
     setTimesUsed(Number(previousTimesUsed.data) + 1);
   }
 
+  // useEffect(() => {
+  //   console.log('Data: ', submissionData);
+  // }, [submissionData]);
+
   const handleSubmission = async(e: FormEvent) => {
     e.preventDefault();
     await handleTagTimesUsed();
@@ -75,7 +79,7 @@ export default function Submission() {
     <>
       <h1>Entry Submission</h1>
       <form onSubmit={handleSubmission}>
-        <TimeOfDay />
+        <TimeOfDay timeOfDay={timeOfDay} onChange={handleTimeOfDay}/>
         <Intensity /> 
         <Button 
           text="Submit"
