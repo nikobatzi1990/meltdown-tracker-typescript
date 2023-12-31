@@ -15,7 +15,7 @@ export default function Submission() {
   const [body, setBody] = useState("");
   const [tag, setTag] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("morning");
-  const [intensity, setIntensity] = useState("not specified");
+  const [intensity, setIntensity] = useState("1");
   const [isFlagged, setIsFlagged] = useState(false);
   const [timesUsed, setTimesUsed] = useState(0);
 
@@ -32,32 +32,27 @@ export default function Submission() {
 
   const handleTitleInput = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const value = e.target.value;
-    setTitle(value);
+    setTitle(e.target.value);
   }
 
   const handleTextBody = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const value = e.target.value;
-    setBody(value);
+    setBody(e.target.value);
   }
 
   const handleTagInput = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const value = e.target.value;
-    setTag(value);
+    setTag(e.target.value);
   }
 
   const handleTimeOfDay = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const value = e.target.id;
-    setTimeOfDay(value);
+    setTimeOfDay(e.target.value);
   }
 
   const handleIntensity = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const value = e.target.id;
-    setIntensity(value);
+    setIntensity(e.target.value);
   }
 
   const handleTagTimesUsed = async() => {
@@ -80,7 +75,7 @@ export default function Submission() {
       <h1>Entry Submission</h1>
       <form onSubmit={handleSubmission}>
         <TimeOfDay timeOfDay={timeOfDay} onChange={handleTimeOfDay}/>
-        <Intensity /> 
+        <Intensity intensity={intensity} onChange={handleIntensity}/> 
         <Button 
           text="Submit"
           title="Submit new entry"
