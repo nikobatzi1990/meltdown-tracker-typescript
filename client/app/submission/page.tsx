@@ -60,10 +60,6 @@ export default function Submission() {
     setTimesUsed(Number(previousTimesUsed.data) + 1);
   }
 
-  // useEffect(() => {
-  //   console.log('Data: ', submissionData);
-  // }, [submissionData]);
-
   const handleSubmission = async(e: FormEvent) => {
     e.preventDefault();
     await handleTagTimesUsed();
@@ -74,6 +70,8 @@ export default function Submission() {
     <>
       <h1>Entry Submission</h1>
       <form onSubmit={handleSubmission}>
+        <Input onChange={handleTitleInput} type='text' text="Title"/>
+        <Input onChange={handleTagInput} type='text' text="Tags"/>
         <TimeOfDay timeOfDay={timeOfDay} onChange={handleTimeOfDay}/>
         <Intensity intensity={intensity} onChange={handleIntensity}/> 
         <Button 
