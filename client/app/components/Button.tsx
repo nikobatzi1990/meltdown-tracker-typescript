@@ -1,9 +1,8 @@
 interface ButtonProps {
-  onClick: React.MouseEventHandler,
+  onClick?: React.MouseEventHandler,
   text: string,
   title: string,
   type: "button" | "submit" | "reset"
-
 }
 
 export default function Button({
@@ -14,10 +13,12 @@ export default function Button({
 }: ButtonProps) {
 
   return (
-    <button
-      title = { title }
-      type = { type }
-      onClick = { onClick } > { text }
-    </button>
+    <div>
+      <button
+        title = { title }
+        type = { type }
+        onClick = { onClick } > { text }
+      </button>
+    </div>
   )
 };

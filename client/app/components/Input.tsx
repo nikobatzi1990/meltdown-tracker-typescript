@@ -6,7 +6,8 @@ interface InputProps {
   placeholder?: string,
   text?: string,
   type: string,
-  value?: string
+  value?: string,
+  checked?:boolean
 }
 
 export default function Input({ 
@@ -17,7 +18,8 @@ export default function Input({
   placeholder, 
   text,
   type, 
-  value }: InputProps) {
+  value,
+  checked }: InputProps) {
 
   return (
     <>
@@ -30,6 +32,7 @@ export default function Input({
         placeholder={placeholder}
         type={type}
         value={value}
+        checked={checked}
       />
     </>
   );
