@@ -35,7 +35,7 @@ export default function Submission() {
     setTitle(e.target.value);
   }
 
-  const handleTextBody = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleTextBody = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     e.preventDefault();
     setBody(e.target.value);
   }
@@ -74,6 +74,13 @@ export default function Submission() {
         <Input onChange={handleTagInput} type='text' text="Tags"/>
         <TimeOfDay timeOfDay={timeOfDay} onChange={handleTimeOfDay}/>
         <Intensity intensity={intensity} onChange={handleIntensity}/> 
+        <textarea 
+            placeholder="Type your entry here!"
+            value={ body }
+            cols={60} 
+            rows={30}
+            onChange={ handleTextBody }>
+          </textarea>
         <Button 
           text="Submit"
           title="Submit new entry"
